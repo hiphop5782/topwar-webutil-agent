@@ -1,4 +1,4 @@
-package com.hacademy.twagent.service;
+package com.hacademy.twagent.analyze.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

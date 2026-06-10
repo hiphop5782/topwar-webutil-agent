@@ -1,11 +1,11 @@
-package com.hacademy.twagent.service;
+package com.hacademy.twagent.analyze.service;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hacademy.twagent.vo.CacheKey;
-import com.hacademy.twagent.vo.CacheValue;
+import com.hacademy.twagent.analyze.vo.CacheKey;
+import com.hacademy.twagent.analyze.vo.CacheValue;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

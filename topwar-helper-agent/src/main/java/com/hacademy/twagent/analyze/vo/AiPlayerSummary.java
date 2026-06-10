@@ -1,4 +1,4 @@
-package com.hacademy.twagent.vo;
+package com.hacademy.twagent.analyze.vo;
 
 public record AiPlayerSummary(
     String nickname,

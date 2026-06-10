@@ -1,4 +1,4 @@
-package com.hacademy.twagent.controller;
+package com.hacademy.twagent.analyze.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hacademy.twagent.service.ServerJsonSummaryService;
-import com.hacademy.twagent.service.TopwarAnalyzeService;
-import com.hacademy.twagent.vo.AnalyzeRequest;
-import com.hacademy.twagent.vo.CacheKey;
+import com.hacademy.twagent.analyze.service.ServerJsonSummaryService;
+import com.hacademy.twagent.analyze.service.TopwarAnalyzeService;
+import com.hacademy.twagent.analyze.vo.AnalyzeRequest;
+import com.hacademy.twagent.analyze.vo.CacheKey;
 
 import reactor.core.publisher.Flux;
 

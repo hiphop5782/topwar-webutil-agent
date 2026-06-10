@@ -1,12 +1,12 @@
-package com.hacademy.twagent.service;
+package com.hacademy.twagent.analyze.service;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Service;
 
-import com.hacademy.twagent.vo.CacheKey;
-import com.hacademy.twagent.vo.CacheValue;
+import com.hacademy.twagent.analyze.vo.CacheKey;
+import com.hacademy.twagent.analyze.vo.CacheValue;
 
 @Service
 public class CacheService {

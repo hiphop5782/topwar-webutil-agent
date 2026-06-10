@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.hacademy.twagent.service.ServerJsonSummaryService;
-import com.hacademy.twagent.service.TopwarAnalyzeService;
+import com.hacademy.twagent.analyze.service.ServerJsonSummaryService;
+import com.hacademy.twagent.analyze.service.TopwarAnalyzeService;
 
 import reactor.core.publisher.Mono;
 
