@@ -6,13 +6,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
 
 import com.hacademy.twagent.vo.CacheKey;
+import com.hacademy.twagent.vo.CacheValue;
 
 @Service
 public class CacheService {
 	
-	private Map<CacheKey, String> cache = new ConcurrentHashMap<>();
+	private Map<CacheKey, CacheValue> cache = new ConcurrentHashMap<>();
 	
-	public String get(CacheKey key) {
+	public CacheValue get(CacheKey key) {
 		return cache.get(key);
 	}
 	
@@ -20,8 +21,12 @@ public class CacheService {
 		return cache.size();
 	}
 	
-	public String push(CacheKey key, String json) {
-		return cache.put(key, json); 
+	public CacheValue push(CacheKey key, CacheValue value) {
+		return cache.put(key, value); 
+	}
+	
+	public CacheValue remove(CacheKey key) {
+		return cache.remove(key);
 	}
 	
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hacademy.twagent.vo.CacheKey;
+import com.hacademy.twagent.vo.CacheValue;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -43,16 +44,25 @@ public class TopwarAnalyzeService {
 		).subscribeOn(Schedulers.boundedElastic());
 	}
 
-	public Flux<String> analyzeStream(CacheKey key, String optimizedJson) {
+	public Flux<String> analyzeStream(CacheKey key, String time, String optimizedJson) {
 		return Flux.defer(()->{
 			String responseLang = normalizeLang(key.getLang());
 			String languageName = languageName(responseLang);
 			
-			//캐시 hit일 경우 캐시된 json을 반환
-			String cachedJson = cacheService.get(key);
-			System.out.println(key);
-			if(cachedJson != null) 
-				return Flux.just(cachedJson);
+			System.out.println("request = " + key);
+			
+			//캐시 hit일 경우 캐시된 value을 반환
+			CacheValue value = cacheService.get(key);
+			if(value != null) {
+				System.out.println("\t→ before time = "+value.getTime());
+				System.out.println("\t→ after time = "+time);
+				if(value.getTime() != null && value.getTime().equals(time)) {
+					System.out.println("→ cache hit");
+					return Flux.just(value.getCachedJson());
+				}
+				cacheService.remove(key);
+				System.out.println("→ cache remove (new version arrived)");
+			}
 
 			//캐시 저장을 위한 버퍼 생성
 			StringBuffer buffer = new StringBuffer();
@@ -65,7 +75,13 @@ public class TopwarAnalyzeService {
 					.doOnComplete(()->{//완료 시
 						String aiResult = buffer.toString();
 						if(!aiResult.isBlank()) {
-							cacheService.push(key, aiResult);
+							cacheService.push(
+									key, 
+									CacheValue.builder()
+										.time(time).cachedJson(aiResult)
+									.build()
+							);
+							System.out.println("→ cache stored");
 						}
 					});	
 		});
@@ -131,7 +147,8 @@ public class TopwarAnalyzeService {
 				2. 동맹 1개는 최대 170명을 수용할 수 있다.
 				3. 일반적인 서버는 1~2개의 동맹으로 운영되며, 가장 강력한 서버들은 4개의 동맹까지 운영한다.
 				4. 단, 동맹 수가 적어도 강력한 핵심 유저와 활동 전투력이 집중되어 있으면 정예형 강서버로 평가할 수 있다.
-				5. 단점을 이야기할 때 보는 사람이 기분 나빠할 만한 직접적인 표현은 자제한다.
+				5. 적은 인원이 골고루 분산되어 있다고 좋은 서버라고 볼 수 없으며, 오히려 집중되어 있는것이 더 좋은 서버이다.
+				6. 단점을 이야기할 때 보는 사람이 기분 나빠할 만한 직접적인 표현은 자제한다.
 
 				서버 유형:
 				- LARGE_SCALE_POWER: 여러 동맹을 안정적으로 운영하는 규모형 강서버

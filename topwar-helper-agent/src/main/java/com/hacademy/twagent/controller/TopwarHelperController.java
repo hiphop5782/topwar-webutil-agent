@@ -37,6 +37,6 @@ public class TopwarHelperController {
 	    String optimizedJson = serverJsonSummaryService.summarizeForAi(request.json());
 	    return topwarAnalyzeService.analyzeStream(CacheKey.builder()
 	    			.lang(lang).server(request.server())
-	    		.build(), optimizedJson);
+	    		.build(), request.time(), optimizedJson);
 	}
 }
